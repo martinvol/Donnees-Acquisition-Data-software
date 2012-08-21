@@ -1,0 +1,61 @@
+<html>
+    <style type="text/css">
+
+    ul {
+    text-decoration: none;
+    list-style-type: none;
+    }
+
+    li {
+    width: 99%;
+    border: solid 1px #c0c0c0;
+    background-color: #e1e1e1;
+    font-size: 11px;
+    font-family: verdana;
+    color: #000;
+    padding: 5px;
+    }
+
+    </style>
+    <script src="/static/Orbited.js"></script>
+    <script type="text/javascript">
+    function send(){
+        conn.send('something\r\n');
+    }
+
+    function delay(){
+        setTimeout("send()", 1000);
+    }
+    function createDiv(a){
+        var pTag = document.createElement("li");
+        pTag.innerHTML = a;            
+        document.getElementById("list").appendChild(pTag);
+    }
+    function getentry(){
+        conn.send(document.getElementById('entry1').value + '\r\n');
+        createDiv(document.getElementById('entry1').value);
+        document.getElementById('entry1').value = '';
+    }
+    </script>
+    <script>
+        TCPSocket = Orbited.TCPSocket;
+        conn = new TCPSocket;
+        conn.onread = function(data) {createDiv(data) };
+        conn.open("localhost", 7777);
+//        conn.open("ilegal.dyndns.org", 7777);
+
+	//        delay();
+
+
+    </script>
+    <body>
+<body id="body">
+    <div id="container">
+        <ul id="list">
+        </ul>
+    </div>
+    <input id="entry1" type="text" name="firstname" />
+        <input id="btn1" type="button" value="create div" onclick="getentry()" />
+
+    </body>
+</html>

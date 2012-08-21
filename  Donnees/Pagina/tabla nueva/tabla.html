@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+<title>Tables with CSS</title>
+<style type="text/css">
+<!--
+@import url("styles.css");
+-->
+</style>
+</head>
+<body>
+<table summary="Webhosting products overview showing all available packages, what's included and what the monthly cost is with an option to order">
+	<caption>Real time measurements</caption>
+	<thead>
+	<tr class="odd">
+		<td class="column1"></td>
+		<th scope="col" abbr="Home">pH</th>
+		<th scope="col" abbr="Home Plus">Temperature</th>	
+		<th scope="col" abbr="Business">O2</th>
+	</tr>	
+	</thead>
+	</tfoot>
+	<tbody>
+ 	<tr>
+		<th scope="row" class="column1">Present</th>
+		<td id="ph" >7.1</td>
+		<td id="temp" >31.1</td>
+		<td id="o2" >8.1</td>
+	</tr>	
+ 	 <tr class="odd">
+		<th scope="row" class="column1">Morning</th>
+		<td>7.2</td>
+		<td>31.2</td>
+		<td>12.5</td>
+	</tr>	
+ 	<tr>
+		<th scope="row" class="column1">Afternoon</th>	
+		<td>6.9</td>
+		<td>30.5</td>
+		<td>10.4</td>
+	</tr>	
+ 	<tr class="odd">
+		<th scope="odd" class="column1">Last update</th>	
+		<td id="ph_time">10AM</td>
+		<td id="temp_time">11AM</td>
+		<td id="o2_time">01PM</td>
+	</tr>
+	</tbody>
+</table>
+</body>
+
+<script src="/static/Orbited.js"></script>
+<script src="jq.js"></script>
+  <script>
+
+    function createDiv(a){
+        var pTag = document.createElement("li");
+        pTag.innerHTML = a;            
+        document.getElementById("list").appendChild(pTag);
+    }
+
+    function color(tipo, valor){
+    if (tipo == "caldera"){
+    //console.log("era caldera");
+    return;
+    }
+    var lista = myArray[tipo];
+    var numero = parseFloat(valor);
+    if (valor <= lista[1])
+      {
+      return "red";
+      }
+    else if (valor <= lista[2])
+      {
+      return "yellow";
+      }
+    else if (valor <= lista[3])
+      {
+      return "green";
+      }
+    else if (valor <= lista[4])
+      {
+      return "yellow";
+      }
+    else if (valor <= lista[5])
+      {
+      return "red";
+      }
+    //console.log(lista)
+    }
+
+    function remplazar_div(div, valor){
+//        console.log(div)
+//        console.log(div.length)
+        //color(div, valor);
+        var myAnchor = document.getElementById(div);
+        var mySpan = document.createElement("td");
+        mySpan.id = div;
+        mySpan.style.color = color(div, valor);
+        mySpan.innerHTML = valor;
+        if (myAnchor != null){
+        myAnchor.parentNode.replaceChild(mySpan, myAnchor);}
+        $('#' + div).fadeOut(200).fadeIn(500)
+    }
+
+    function remplazar_hora(div, valor){
+//        console.log(div)
+//        console.log(div.length)
+        var myAnchor = document.getElementById(div + "_time");
+        var mySpan = document.createElement("td");
+        mySpan.id = div + "_time";
+        mySpan.innerHTML = valor;
+        if (myAnchor != null){
+        myAnchor.parentNode.replaceChild(mySpan, myAnchor);}
+    }
+
+
+    function Cambiar_tabla(data){
+        data = data.split("\r\n");
+        for (i in data){
+            var j = data[i].split(" ")
+            if (j.length == 3){
+            remplazar_div(j[0], j[1]);
+            remplazar_hora(j[0], j[2].replace("_", " "));
+            }
+        } 
+
+    }
+
+        var myArray = new Array();
+        myArray['ph'] = [0 ,5.6 ,5.7 ,7.5, 7.8, 14 ];
+        myArray['temp'] = [0,24,27, 31, 32, 60];
+        myArray['o2'] = [0, 2, 4, 50, 51, 52];
+
+
+function timeMsg()
+{
+delete conn
+//console.log("me cerre \n");
+connect();
+//if (conn.open != true){
+//var t1=setTimeout("timeMsg()",3000);}
+}
+
+
+//        conn.open("ilegal.dyndns.org/demo", 8080);
+
+	//        delay();
+
+
+    function connect(){
+        TCPSocket = Orbited.TCPSocket;
+        conn = new TCPSocket;
+        conn.onread = function(data) {Cambiar_tabla(data)};
+        conn.onclose = function() {setTimeout("timeMsg()",3000)};
+        conn.open("localhost", 7777);
+        //console.log("conecto \n");
+    return;
+    }    
+    connect();
+    
+    </script>
+</html>
+
+

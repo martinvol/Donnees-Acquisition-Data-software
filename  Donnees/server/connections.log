@@ -1,0 +1,22 @@
+2012-06-07 17:05:39,926,926 DEBUG [orbited.cometsession.TCPConnectionResource] new transport: <orbited.transports.xhrstream.XHRStreamingTransport instance at 0x8d13c4c>
+2012-06-07 17:05:39,926,926 DEBUG [orbited.cometsession.TCPConnectionResource] _send data=<orbited.cometsession.TCPOption object at 0x8d13b2c> packetId=1
+2012-06-07 17:05:39,927,927 DEBUG [orbited.cometsession.TCPConnectionResource] _send data=<orbited.cometsession.TCPOption object at 0x8d13b4c> packetId=2
+2012-06-07 17:05:40,060,060 DEBUG [orbited.cometsession.TCPConnectionResource] render: request=<POST /tcp/797136fd0716468096594ab889fce2cb?nocache=0.817019900916267&ack=2 HTTP/1.1>
+2012-06-07 17:05:40,065,065 DEBUG [orbited.cometsession.TCPConnectionResource] render: request.content='11,114,data020,bG9jYWxob3N0Ojc3NzcK'
+2012-06-07 17:05:40,069,069 DEBUG [orbited.cometsession.TCPConnectionResource] ack ackId=2
+2012-06-07 17:05:40,070,070 DEBUG [orbited.cometsession.TCPConnectionResource] before ack unackQueue=[(<orbited.cometsession.TCPOption object at 0x8d13b2c>, 1), (<orbited.cometsession.TCPOption object at 0x8d13b4c>, 2)]
+2012-06-07 17:05:40,070,070 DEBUG [orbited.cometsession.TCPConnectionResource] after ack unackQueue=[]
+2012-06-07 17:05:40,071,071 DEBUG [orbited.cometsession.TCPConnectionResource] RECV: 11,114,data020,bG9jYWxob3N0Ojc3NzcK
+2012-06-07 17:05:40,072,072 DEBUG [orbited.cometsession.TCPConnectionResource] ['11,114,data020,bG9jYWxob3N0Ojc3NzcK', [], []]
+2012-06-07 17:05:40,073,073 DEBUG [orbited.cometsession.TCPConnectionResource] ['14,data020,bG9jYWxob3N0Ojc3NzcK', [], ['1']]
+2012-06-07 17:05:40,073,073 DEBUG [orbited.cometsession.TCPConnectionResource] ['020,bG9jYWxob3N0Ojc3NzcK', [], ['1', 'data']]
+2012-06-07 17:05:40,082,082 DEBUG [orbited.cometsession.TCPConnectionResource] parseData: frame=['1', 'data', 'bG9jYWxob3N0Ojc3NzcK']
+2012-06-07 17:05:40,157,157 DEBUG [orbited.cometsession.TCPConnectionResource] _send data='1' packetId=3
+2012-06-07 17:05:40,229,229 DEBUG [orbited.cometsession.TCPConnectionResource] _send data='ph 07.8 17:05:37_07/06/12\r\ntemp 31.3 17:05:37_07/06/12\r\no2 05.1 17:05:37_07/06/12\r\nSCADA nz 17:05:39_07/06/12\r\n' packetId=4
+2012-06-07 17:05:40,316,316 DEBUG [orbited.cometsession.TCPConnectionResource] _send data='ph 07.7 17:05:40_07/06/12\r\n' packetId=5
+2012-06-07 17:05:42,789,789 DEBUG [orbited.cometsession.TCPConnectionResource] _send data='ph 07.6 17:05:42_07/06/12\r\n' packetId=6
+2012-06-07 17:05:44,967,967 DEBUG [orbited.cometsession.TCPConnectionResource] _send data='temp 31.4 17:05:44_07/06/12\r\no2 05.2 17:05:44_07/06/12\r\n' packetId=7
+2012-06-07 17:06:40,071,071 DEBUG [orbited.cometsession.TCPConnectionResource] close reason=timeout <orbited.cometsession.TCPConnectionResource instance at 0x8d13aac>
+2012-06-07 17:06:40,072,072 DEBUG [orbited.cometsession.TCPConnectionResource] connectionLost... already triggered? False
+2012-06-07 17:06:40,073,073 DEBUG [orbited.cometsession.TCPConnectionResource] do trigger
+2012-06-07 17:06:40,074,074 DEBUG [orbited.cometsession.TCPConnectionResource] close called - already closed

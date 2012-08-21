@@ -1,0 +1,160 @@
+#! /usr/bin/env python
+
+import urllib2
+import pygame
+
+#Inicializar pygame
+pygame.init()
+pygame.font.init()
+pygame.display.set_caption("SCADA | Proyecto Tilapia")
+SIZE = (1024, 550)
+screen = pygame.display.set_mode(SIZE)
+
+def decorador(f):
+    def sacar(*arg, **karg):
+        print 'entre a', f.__name__
+        try:
+            return f(*arg, **karg)
+        except :
+            print 'Error en', f.__name__
+            return True
+    return sacar
+
+#Cargargamos todos los recursos
+fondo = pygame.image.load("static/fondo.png").convert_alpha()
+valvulaSI = pygame.image.load("static/valvulaSI.bmp").convert_alpha()
+valvulaNO = pygame.image.load("static/valvulaNO.bmp").convert_alpha()
+bombaSI = pygame.image.load("static/bombaSI.bmp").convert_alpha()
+bombaNO = pygame.image.load("static/bombaNO.bmp").convert_alpha()
+#Despues se vienen los sprites varios
+
+#Cremos las clasese
+class Sprite(pygame.sprite.Sprite):
+    def __init__(self, imagen, lugar):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = imagen
+        self.rect = self.image.get_rect()
+        self.rect.clamp_ip(screen.get_rect())
+        self.rect[0] = lugar[0]
+        self.rect[1] = lugar[1]
+
+#Instanciamos los objetos
+valvula01 = Sprite( imagen=valvulaNO, lugar=(62,277) ) #esta es de reserva
+valvula02 = Sprite( imagen=valvulaNO, lugar=(170,319) ) #esta es de del tanque
+valvula03 = Sprite( imagen=valvulaNO, lugar=(739,477) ) #esta filtra
+valvula04 = Sprite( imagen=valvulaNO, lugar=(558,398) ) #esta no filtra (izquierda)
+valvula05 = Sprite( imagen=valvulaNO, lugar=(907,398) ) #esta no filtra (derecha)
+valvula06 = Sprite( imagen=valvulaNO, lugar=(818,273) ) #frio (izquierda)
+valvula07 = Sprite( imagen=valvulaNO, lugar=(663,273) ) #calor (derecha)
+valvula08 = Sprite( imagen=valvulaNO, lugar=(230,395) ) #valvula de bomba01
+valvula09 = Sprite( imagen=valvulaNO, lugar=(230,475) ) #valvula de bomba02
+bomba01 = Sprite( imagen=bombaNO, lugar=(381,400) ) #bomba principal
+bomba02 = Sprite( imagen=bombaNO, lugar=(381,477) ) #bomba de emergencia
+
+#Creamos los grupos
+GrupoSprite = pygame.sprite.Group()
+GrupoSprite.add(valvula01, valvula02)#De donde entro el agua
+GrupoSprite.add(valvula03, valvula04, valvula05)
+GrupoSprite.add(valvula06, valvula07)
+GrupoSprite.add(valvula08, valvula09)
+GrupoSprite.add(bomba01, bomba02)
+
+#Inicializar simulacion
+screen.blit(fondo,(0,0))
+clock = pygame.time.Clock()
+running = True
+
+#Definimos funciones
+def EntraAgua(reserva=False, tanque=False):
+    if reserva:
+        valvula01.image = valvulaSI
+        valvula02.image = valvulaNO
+    elif tanque:
+        valvula01.image = valvulaNO
+        valvula02.image = valvulaSI
+
+def recirculando(filtrar=False, renovar=False):
+    if filtrar:
+        valvula03.image = valvulaSI
+        valvula04.image = valvula05.image = valvulaNO
+    elif renovar:    
+        valvula03.image = valvulaNO
+        valvula04.image = valvula05.image = valvulaSI
+
+def caldera(calor=False, frio=False, apagar=False):
+    if frio:
+        valvula06.image = valvulaNO
+        valvula07.image = valvulaSI
+    elif calor:
+        valvula06.image = valvulaSI
+        valvula07.image = valvulaNO
+    elif apagar:
+        valvula06.image = valvulaNO
+        valvula07.image = valvulaNO
+
+#definimos estados
+@decorador
+def estados_caldera(caldera_st=None):
+    caldera_st =  urllib2.urlopen('http://volteck.net/proyecto/devolver-status-caldera.php').read()
+    if 'e' in caldera_st:
+        caldera(calor=True)
+    elif 'd' in caldera_st:
+        caldera(frio=True)
+    else: print 'Error en el estado de la caldera'
+
+@decorador
+def stados_agua(agua_st=None):
+    agua_st =  urllib2.urlopen('http://volteck.net/proyecto/devolver-status-agua.php').read()
+    if 'a' in agua_st:
+        EntraAgua(tanque=True)
+    elif 'b' in agua_st:
+        EntraAgua(reserva=True)
+    else: print 'Error en el estado deL agua'
+
+@decorador
+def stados_filtro(filtro_st=None):
+    filtro_st =  urllib2.urlopen('http://volteck.net/proyecto/devolver-status-quehace.php').read()
+    print filtro_st
+    if 'c' in filtro_st:
+        recirculando(renovar=True)
+        caldera(apagar=True)
+        EntraAgua(tanque=True)
+        return False
+    elif 'z' in filtro_st:
+        recirculando(filtrar=True)
+        return True
+
+
+while running:
+    #   1-Procesar acciones del jugador
+    for event in pygame.event.get():
+          if (event.type == pygame.KEYUP) or (event.type == pygame.KEYDOWN):
+            if (event.key == pygame.K_ESCAPE):
+                running = False
+          elif event.type == pygame.QUIT:
+            running = False
+    keystate = pygame.key.get_pressed()
+    if keystate[pygame.K_LEFT]:
+        bomba02.rect[0] -= 1
+    if keystate[pygame.K_RIGHT]:
+        bomba02.rect[0] += 1
+    if keystate[pygame.K_UP]:
+        bomba02.rect[1] -= 1
+    if keystate[pygame.K_DOWN]:
+        bomba02.rect[1] += 1
+#    print bomba02.rect
+
+#    if stados_filtro():
+#        print 'ENTRO'
+#        estados_caldera()
+#        stados_agua()
+
+    #   2-Avanzar simulacion
+    clock.tick(20)
+
+    #   3-Dibujar estado actual
+    GrupoSprite.clear(screen, fondo)
+    GrupoSprite.draw(screen)
+    GrupoSprite.update()
+
+    pygame.display.flip() #esto siempre al final

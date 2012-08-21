@@ -1,0 +1,400 @@
+/usr/local/lib/python2.6/dist-packages/orbited/start.py:25: DeprecationWarning: listenWith is deprecated since Twisted 10.1.  See IReactorFDSet.
+  reactor.listenWith(port_class, factory=factory_class(), resource=root, childName=child_path)
+Traceback (most recent call last):
+  File "/usr/lib/python2.6/dist-packages/twisted/protocols/basic.py", line 251, in dataReceived
+    why = self.lineReceived(line)
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 1573, in lineReceived
+    self.allContentReceived()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 1641, in allContentReceived
+    req.requestReceived(command, path, version)
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 807, in requestReceived
+    self.process()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/web/server.py", line 125, in process
+    self.render(resrc)
+  File "/usr/lib/python2.6/dist-packages/twisted/web/server.py", line 132, in render
+    body = resrc.render(self)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 21, in render
+    self.conn.transportOpened(self)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 304, in transportOpened
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py:455: DeprecationWarning: twisted.web.error.NoResource is deprecated since Twisted 9.0.  See twisted.web.resource.NoResource.
+  return error.NoResource("<script>alert('whoops');</script>")
+Traceback (most recent call last):
+  File "/usr/lib/python2.6/dist-packages/twisted/protocols/basic.py", line 251, in dataReceived
+    why = self.lineReceived(line)
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 1573, in lineReceived
+    self.allContentReceived()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 1641, in allContentReceived
+    req.requestReceived(command, path, version)
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 807, in requestReceived
+    self.process()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/web/server.py", line 125, in process
+    self.render(resrc)
+  File "/usr/lib/python2.6/dist-packages/twisted/web/server.py", line 132, in render
+    body = resrc.render(self)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 21, in render
+    self.conn.transportOpened(self)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 304, in transportOpened
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+Traceback (most recent call last):
+  File "/usr/local/bin/orbited", line 9, in <module>
+    load_entry_point('orbited==0.7.10', 'console_scripts', 'orbited')()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/start.py", line 183, in main
+    reactor.run()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1165, in run
+    self.mainLoop()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1174, in mainLoop
+    self.runUntilCurrent()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 796, in runUntilCurrent
+    call.func(*call.args, **call.kw)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 335, in timeout
+    self.close("timeout", True)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 365, in close
+    self.hardClose()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 352, in hardClose
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+Traceback (most recent call last):
+  File "/usr/local/bin/orbited", line 9, in <module>
+    load_entry_point('orbited==0.7.10', 'console_scripts', 'orbited')()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/start.py", line 183, in main
+    reactor.run()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1165, in run
+    self.mainLoop()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1174, in mainLoop
+    self.runUntilCurrent()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 796, in runUntilCurrent
+    call.func(*call.args, **call.kw)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 335, in timeout
+    self.close("timeout", True)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 365, in close
+    self.hardClose()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 352, in hardClose
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+Traceback (most recent call last):
+  File "/usr/local/bin/orbited", line 9, in <module>
+    load_entry_point('orbited==0.7.10', 'console_scripts', 'orbited')()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/start.py", line 183, in main
+    reactor.run()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1165, in run
+    self.mainLoop()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1174, in mainLoop
+    self.runUntilCurrent()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 796, in runUntilCurrent
+    call.func(*call.args, **call.kw)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 335, in timeout
+    self.close("timeout", True)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 365, in close
+    self.hardClose()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 352, in hardClose
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+Traceback (most recent call last):
+  File "/usr/local/bin/orbited", line 9, in <module>
+    load_entry_point('orbited==0.7.10', 'console_scripts', 'orbited')()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/start.py", line 183, in main
+    reactor.run()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1165, in run
+    self.mainLoop()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1174, in mainLoop
+    self.runUntilCurrent()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 796, in runUntilCurrent
+    call.func(*call.args, **call.kw)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 335, in timeout
+    self.close("timeout", True)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 365, in close
+    self.hardClose()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 352, in hardClose
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+Traceback (most recent call last):
+  File "/usr/local/bin/orbited", line 9, in <module>
+    load_entry_point('orbited==0.7.10', 'console_scripts', 'orbited')()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/start.py", line 183, in main
+    reactor.run()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1165, in run
+    self.mainLoop()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1174, in mainLoop
+    self.runUntilCurrent()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 796, in runUntilCurrent
+    call.func(*call.args, **call.kw)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 335, in timeout
+    self.close("timeout", True)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 365, in close
+    self.hardClose()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 352, in hardClose
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+Traceback (most recent call last):
+  File "/usr/local/bin/orbited", line 9, in <module>
+    load_entry_point('orbited==0.7.10', 'console_scripts', 'orbited')()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/start.py", line 183, in main
+    reactor.run()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1165, in run
+    self.mainLoop()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1174, in mainLoop
+    self.runUntilCurrent()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 796, in runUntilCurrent
+    call.func(*call.args, **call.kw)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 335, in timeout
+    self.close("timeout", True)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 365, in close
+    self.hardClose()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 352, in hardClose
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+Traceback (most recent call last):
+  File "/usr/local/bin/orbited", line 9, in <module>
+    load_entry_point('orbited==0.7.10', 'console_scripts', 'orbited')()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/start.py", line 183, in main
+    reactor.run()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1165, in run
+    self.mainLoop()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1174, in mainLoop
+    self.runUntilCurrent()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 796, in runUntilCurrent
+    call.func(*call.args, **call.kw)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 335, in timeout
+    self.close("timeout", True)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 365, in close
+    self.hardClose()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 352, in hardClose
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+Traceback (most recent call last):
+  File "/usr/local/bin/orbited", line 9, in <module>
+    load_entry_point('orbited==0.7.10', 'console_scripts', 'orbited')()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/start.py", line 183, in main
+    reactor.run()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1165, in run
+    self.mainLoop()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1174, in mainLoop
+    self.runUntilCurrent()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 796, in runUntilCurrent
+    call.func(*call.args, **call.kw)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 335, in timeout
+    self.close("timeout", True)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 365, in close
+    self.hardClose()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 352, in hardClose
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+Traceback (most recent call last):
+  File "/usr/local/bin/orbited", line 9, in <module>
+    load_entry_point('orbited==0.7.10', 'console_scripts', 'orbited')()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/start.py", line 183, in main
+    reactor.run()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1165, in run
+    self.mainLoop()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1174, in mainLoop
+    self.runUntilCurrent()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 796, in runUntilCurrent
+    call.func(*call.args, **call.kw)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 335, in timeout
+    self.close("timeout", True)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 365, in close
+    self.hardClose()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 352, in hardClose
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+Traceback (most recent call last):
+  File "/usr/local/bin/orbited", line 9, in <module>
+    load_entry_point('orbited==0.7.10', 'console_scripts', 'orbited')()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/start.py", line 183, in main
+    reactor.run()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1165, in run
+    self.mainLoop()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1174, in mainLoop
+    self.runUntilCurrent()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 796, in runUntilCurrent
+    call.func(*call.args, **call.kw)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 335, in timeout
+    self.close("timeout", True)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 365, in close
+    self.hardClose()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 352, in hardClose
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+Traceback (most recent call last):
+  File "/usr/local/bin/orbited", line 9, in <module>
+    load_entry_point('orbited==0.7.10', 'console_scripts', 'orbited')()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/start.py", line 183, in main
+    reactor.run()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1165, in run
+    self.mainLoop()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1174, in mainLoop
+    self.runUntilCurrent()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 796, in runUntilCurrent
+    call.func(*call.args, **call.kw)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 335, in timeout
+    self.close("timeout", True)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 365, in close
+    self.hardClose()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 352, in hardClose
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+Traceback (most recent call last):
+  File "/usr/local/bin/orbited", line 9, in <module>
+    load_entry_point('orbited==0.7.10', 'console_scripts', 'orbited')()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/start.py", line 183, in main
+    reactor.run()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1165, in run
+    self.mainLoop()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1174, in mainLoop
+    self.runUntilCurrent()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 796, in runUntilCurrent
+    call.func(*call.args, **call.kw)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 335, in timeout
+    self.close("timeout", True)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 365, in close
+    self.hardClose()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 352, in hardClose
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+Traceback (most recent call last):
+  File "/usr/local/bin/orbited", line 9, in <module>
+    load_entry_point('orbited==0.7.10', 'console_scripts', 'orbited')()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/start.py", line 183, in main
+    reactor.run()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1165, in run
+    self.mainLoop()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1174, in mainLoop
+    self.runUntilCurrent()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 796, in runUntilCurrent
+    call.func(*call.args, **call.kw)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 335, in timeout
+    self.close("timeout", True)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 365, in close
+    self.hardClose()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 352, in hardClose
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+Traceback (most recent call last):
+  File "/usr/local/bin/orbited", line 9, in <module>
+    load_entry_point('orbited==0.7.10', 'console_scripts', 'orbited')()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/start.py", line 183, in main
+    reactor.run()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1165, in run
+    self.mainLoop()
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 1174, in mainLoop
+    self.runUntilCurrent()
+--- <exception caught here> ---
+  File "/usr/lib/python2.6/dist-packages/twisted/internet/base.py", line 796, in runUntilCurrent
+    call.func(*call.args, **call.kw)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 335, in timeout
+    self.close("timeout", True)
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 365, in close
+    self.hardClose()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/cometsession.py", line 352, in hardClose
+    self.cometTransport.close()
+  File "/usr/local/lib/python2.6/dist-packages/orbited/transports/base.py", line 72, in close
+    self.request.finish()
+  File "/usr/lib/python2.6/dist-packages/twisted/web/http.py", line 900, in finish
+    "Request.finish called on a request after its connection was lost; "
+exceptions.RuntimeError: Request.finish called on a request after its connection was lost; use Request.notifyFinish to keep track of this.
+09/02/11 10:11:09:237 INFO   orbited.start	proxy protocol active
+09/02/11 10:11:09:465 INFO   orbited.start	Listening http@8080
+09/02/11 10:15:24:946 ACCESS new connection from 201.250.119.252:46740 to localhost:7777	
+09/02/11 10:24:53:331 ACCESS new connection from 201.250.119.252:46741 to localhost:7777	
+09/02/11 10:25:52:623 ACCESS connection closed from 201.250.119.252:46740 to localhost:7777	
+09/02/11 10:36:54:773 ACCESS connection closed from 201.250.119.252:46741 to localhost:7777	
+09/02/11 10:50:39:614 ACCESS new connection from 201.250.119.252:55196 to localhost:7777	
+09/02/11 10:52:13:672 ACCESS connection closed from 201.250.119.252:55196 to localhost:7777	
+09/02/11 10:53:12:376 ACCESS new connection from 201.250.119.252:55197 to localhost:7777	
+09/02/11 10:53:18:892 ACCESS new connection from 201.250.126.17:57457 to localhost:7777	
+09/02/11 10:54:18:152 ACCESS connection closed from 201.250.119.252:55197 to localhost:7777	
+09/02/11 11:16:51:301 ACCESS connection closed from 201.250.126.17:57457 to localhost:7777	
+09/02/11 11:22:52:922 ACCESS new connection from 201.250.126.17:49262 to localhost:7777	
+09/02/11 11:56:22:851 ACCESS connection closed from 201.250.126.17:49262 to localhost:7777	
+09/02/11 12:49:56:266 ACCESS new connection from 201.250.87.82:49539 to localhost:7777	
+09/02/11 12:49:59:160 ACCESS new connection from 201.250.87.82:49540 to localhost:7777	
+09/02/11 12:50:58:565 ACCESS connection closed from 201.250.87.82:49539 to localhost:7777	
+09/02/11 13:54:13:710 ACCESS connection closed from 201.250.87.82:49540 to localhost:7777	
+09/02/11 14:17:46:462 ACCESS new connection from 201.250.102.245:49633 to localhost:7777	
+09/02/11 15:31:19:120 ACCESS connection closed from 201.250.102.245:49633 to localhost:7777	
+09/02/11 17:46:49:942 ACCESS new connection from 201.250.119.1:49805 to localhost:7777	
+09/02/11 17:50:43:505 ACCESS new connection from 201.250.119.1:49805 to localhost:7777	
+09/02/11 17:51:42:561 ACCESS connection closed from 201.250.119.1:49805 to localhost:7777	
+09/02/11 18:21:52:998 ACCESS connection closed from 201.250.119.1:49805 to localhost:7777	
+09/02/11 18:42:49:329 ACCESS new connection from 201.250.119.1:49864 to localhost:7777	
+09/02/11 19:26:21:699 ACCESS connection closed from 201.250.119.1:49864 to localhost:7777	
+09/02/11 20:30:49:486 ACCESS new connection from 201.250.119.1:49923 to localhost:7777	
+09/02/11 21:19:23:405 ACCESS connection closed from 201.250.119.1:49923 to localhost:7777	

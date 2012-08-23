@@ -33,17 +33,20 @@ How to Run
 ----------
 
 ::
+
     $ cd Donnees
     $ python tilapia -f #this argument creates a virtual data input
 
 Start the web server:
 
 ::    
+
     $ orbited --config server/orbited.cfg #start the webserver 
     
 Start the SCADA:
     
 ::
+
     $ cd SCADA
     $ python SCADA.py
     

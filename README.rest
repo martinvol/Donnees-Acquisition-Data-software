@@ -29,6 +29,8 @@ Dependences
     linux$: sudo easy_install numpy
     linux$: sudo easy_install pyserial
     linux$: sudo easy_install pygtk
+    linux$: sudo easy_install pygame #optional, required to use the SCADA
+
 
 How to Run
 ----------

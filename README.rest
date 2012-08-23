@@ -1,0 +1,61 @@
+Donnees Acquisition Data software
+===========================
+
+:Author: Martin volpe
+
+Dronnes is an open source Acquisition Data software written entirely in Python. 
+
+
+Features
+--------
+
+* Live data plotting
+* Extensible data sources, serial port is natively supported
+* Allow to record data as data logger
+* Exportable charts
+* E-mail reports
+* Built-in web interface 
+* Linux and Windows support
+* Built-in SCADA sofware
+
+Dependences
+-----------
+
+::
+    linux$: sudo easy_install orbited
+    linux$: sudo easy_install twisted
+    linux$: sudo easy_install matplotlib
+    linux$: sudo easy_install numpy
+    linux$: sudo easy_install pyserial
+    linux$: sudo easy_install pygtk
+
+How to Run
+----------
+
+::
+    $ cd Donnees
+    $ python tilapia -f #this argument creates a virtual data input
+
+Start the web server:
+
+::    
+    $ orbited --config server/orbited.cfg #start the webserver 
+    
+Start the SCADA:
+    
+::
+    $ cd SCADA
+    $ python SCADA.py
+    
+
+A nice real-time updated page should be available at http://localhost:8080/demo
+    
+
+Current Version
+---------------
+
+0.2 Alpha
+
+Author:
+-------
+`Martin Volpe <http://about.me/MartinVolpe>`_

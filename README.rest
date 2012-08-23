@@ -53,7 +53,13 @@ Start the SCADA:
     
 
 A nice real-time updated page should be available at http://localhost:8080/demo
-    
+
+
+Screenshot
+----------
+.. figure:: http://volteck.net/development/wp-content/uploads/2012/08/Screenshot-from-2012-08-22-234128.png
+   :target: http://volteck.net/development/wp-content/uploads/2012/08/Screenshot-from-2012-08-22-234128.png
+
 
 Current Version
 ---------------

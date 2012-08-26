@@ -1,8 +1,12 @@
 # -*- encoding: utf-8 -*-
 #!/usr/bin/python
 
+#This module was written by Sebastian Alonso. It is not used as part of the program
+#and will be discontinued in future versions
+
 """Este modulo es en encargado de enviar los emails con los graficos
 correspondientes, buscandolos en la carpeta local"""
+
 
 import smtplib
 from email.MIMEMultipart import MIMEMultipart

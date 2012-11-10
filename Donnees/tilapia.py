@@ -9,6 +9,7 @@ de los datos de la base de datos y esos datos enviarlos por mail. En caso de
 emergencia envia un email a una API de las companias de mensageria, el mensage enviado
 llega a encargado de la instalacion describiendo el problema."""
 
+from twisted.internet.task import deferLater, LoopingCall
 #Importamos todo lo que necesitamos:
 if __name__ == "__main__":
     from twisted.internet import gtk2reactor # for gtk-2.0
@@ -274,7 +275,7 @@ class App (object):
                     self.q.put((j.nombre, j.actual, j.tiempo, j.viejo_viejo))
                 #print a_subir, j.nombre
                 self.connection.sendConnected(a_subir, j.nombre, j.tiempo.strftime("%H:%M:%S_%d/%m/%y"))
-            yield
+            yield deferLater(reactor, 0, lambda : None)
     
     @deco(.1, False)
     @inlineCallbacks    
@@ -285,7 +286,7 @@ class App (object):
         except Empty:
             self.valor = ()
             #print "No estaba lista la Queue"
-        yield
+        yield deferLater(reactor, 0, lambda : None)
         if self.valor == "fallo":
             self.stop(True)
         elif self.valor:
@@ -293,7 +294,7 @@ class App (object):
             self.stop(False)
             for i in lista_de_valores:
                 i = i["nombre"]
-                if i in self.valor:	
+                if i in self.valor:    
                     #print self.valor
                     #if i == "caldera":
                     #    print i, self.valor[i]
@@ -302,7 +303,7 @@ class App (object):
                     j.tiempo = datetime.now()
                 else:
                     pass
-                yield
+                yield deferLater(reactor, 0, lambda : None)
 
     @deco(.1, None)
     @inlineCallbacks
@@ -311,7 +312,7 @@ class App (object):
             nombre = i["nombre"]
             a_widget =  getattr(self, nombre)#.actual
             self.gui.update_label(nombre, a_widget)
-            yield
+            yield deferLater(reactor, 0, lambda : None)
 #        self.gui.update_labels(self.valor)
 
     @deco(1, None)
@@ -319,7 +320,7 @@ class App (object):
     def sms(self):
         mande = False
         for i in lista_de_valores:
-            yield
+            yield deferLater(reactor, 0, lambda : None)
             if i["dato"] and self.mandar and self.gui.checkbutton1.get_active():
                 j = getattr(self, i["nombre"])
                 if float(j.actual) <  j.minimo or float(j.actual) >  j.maximo:
@@ -328,7 +329,7 @@ class App (object):
                     mande = True
                     reactor.callLater(10*60, self.semaforo_sms)
         if mande: self.mandar = False
-        yield
+        yield deferLater(reactor, 0, lambda : None)
                 
     def mandar_sms(self, nombre):
         self.mandar_mails_alerta()

@@ -17,29 +17,27 @@ if __name__ == "__main__":
 
 
 from gtk import glade
+from Queue import Empty
 from os.path import join
+from Mailing import mail
 from server import server
 from subprocess import Popen
 from models import serie, lista
 from models.conf import direccion
 from twisted.internet import reactor
-
+from datetime import datetime, timedelta
+from multiprocessing import Process, Queue
 from twisted.internet.task import deferLater, LoopingCall
 from twisted.internet.defer import inlineCallbacks, Deferred
 
 
 
 
-#Modulos que son partes del programa
-#El modulo par alas fechas
-#from date import *
-from datetime import datetime, timedelta
-from multiprocessing import Process, Queue
-from Queue import Empty
+
 
 from sys import stdout, argv
 
-from Mailing import mail
+
 from grafico import AbreParsea
 #from threading import Thread
 
@@ -243,22 +241,17 @@ class App (object):
     def conseguir_datos(self):
         try:
             self.valor = self.q1.get(block=False)
-            #print self.valor, "App" rs232
         except Empty:
             self.valor = ()
-            #print "No estaba lista la Queue"
+            #Queue wasn't ready
         yield deferLater(reactor, 0, lambda : None)
         if self.valor == "fallo":
             self.stop(True)
         elif self.valor:
-            #print self.valor
             self.stop(False)
             for i in lista_de_valores:
                 i = i["nombre"]
                 if i in self.valor:
-                    #print self.valor
-                    #if i == "caldera":
-                    #    print i, self.valor[i]
                     j = getattr(self, i)
                     j.actual = self.valor[i]
                     j.tiempo = datetime.now()
@@ -271,10 +264,9 @@ class App (object):
     def refresh(self):
         for i in lista_de_valores:
             nombre = i["nombre"]
-            a_widget =  getattr(self, nombre)#.actual
+            a_widget =  getattr(self, nombre)
             self.gui.update_label(nombre, a_widget)
             yield deferLater(reactor, 0, lambda : None)
-#        self.gui.update_labels(self.valor)
 
     @deco(1, None)
     @inlineCallbacks
@@ -303,7 +295,7 @@ class App (object):
 
         if self.gui.checkbutton2.get_active():
             done = lambda arg: stdout.write(str(arg) + " terminé" + "\n")
-            failed = lambda err: err.printTraceback()#stdout.write(str(arg.getErrorMessage()) + " fallé" + "" + "\n")
+            failed = lambda err: err.printTraceback()
 
             d = deferToThread(inner_blocking_code)
             d.addCallbacks(done, failed)
@@ -325,7 +317,7 @@ class App (object):
             self.graficando = False
 
         done = lambda arg: stdout.write(str(arg) + " terminé" + "\n")
-        failed = lambda err: err.printTraceback()#stdout.write(str(arg.getErrorMessage()) + " fallé" + "" + "\n")
+        failed = lambda err: err.printTraceback()
 
         d = deferToThread(inner_blocking_code)
         d.addCallbacks(done, failed)
@@ -382,11 +374,11 @@ def rs232(q1, Serial_):
         try:
             try:
                 dato = ser.mis_datos()
-                #print dato
-                #print dato
             except OSError:
-                ser.close()             #si el sistema operativo nos niega el acceso al puerto
-                ser.open()              #lo reinicimamos
+                #OS denies access
+                ser.close()
+                #We start it again
+                ser.open()
 
             #print dato, dato
             if dato is None:
@@ -404,6 +396,7 @@ def rs232(q1, Serial_):
                 if q1.qsize() > 2:
                     maximo += 1
                     #esto regula el tamaño de la Queue
+                    #this sets the maximun size of the queue
             if q1.full():
                 print "canal de comunicación rebalzó"
                 q1 = Queue()
@@ -434,7 +427,5 @@ lista_de_valores = lista.lista_de_valores
 
 
 if __name__ == "__main__":
-    #Si el programa se esta ejecutando(no es importado)
-    #se ejecuta
-    """Inicia el programa"""
+    #Here we go!
     main()

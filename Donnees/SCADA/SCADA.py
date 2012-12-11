@@ -1,13 +1,16 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+
+import pygame
+
 from urllib2 import urlopen
+
 from twisted.internet import reactor
 from twisted.protocols.basic import LineReceiver
 from twisted.internet.protocol import ClientFactory
-import pygame
 
-#Inicializar pygame
+#Initializes pygame
 pygame.init()
 pygame.font.init()
 pygame.display.set_caption("SCADA | Proyecto Tilapia")
@@ -15,7 +18,7 @@ SIZE = (1024, 550)
 screen = pygame.display.set_mode(SIZE)
 
 
-#Cargargamos todos los recursos
+#Load all the resources from files
 font = pygame.font.Font(None,32)
 fondo = pygame.image.load("static/fondo.png").convert_alpha()
 valvulaSI = pygame.image.load("static/valvulaSI.bmp").convert_alpha()
@@ -26,9 +29,8 @@ aireSI = pygame.image.load("static/aireSI.bmp").convert_alpha()
 aireNO = pygame.image.load("static/aireNO.bmp").convert_alpha()
 flechaDE = pygame.image.load("static/flecha_dcha.png").convert_alpha()
 flechaIZ = pygame.image.load("static/flecha_izq.png").convert_alpha()
-#Despues se vienen los sprites varios
 
-#Cremos las clasese
+
 class Sprite(pygame.sprite.Sprite):
     def __init__(self, imagen, lugar):
         pygame.sprite.Sprite.__init__(self)
@@ -76,7 +78,8 @@ def parseador(X):
 
 urlopen = decorador(urlopen)
 
-#Instanciamos los objetos
+#Initializes all the objects
+#TODO, this should be made automatically with a loop
 flecha01 = Sprite( imagen=flechaDE, lugar=(750,414) ) #del filtro
 flecha02 = Sprite( imagen=flechaDE, lugar=(750,254) ) #caldera
 valvula01 = Sprite( imagen=valvulaNO, lugar=(62,277) ) #esta es de reserva
@@ -95,7 +98,8 @@ indicadorPh = Indicador(lugar=(400,244), medicion='Ph: ')
 indicadorO2 = Indicador(lugar=(400,294), medicion='02: ')
 indicadorTemp = Indicador(lugar=(400,344), medicion='Temp: ')
 
-#Creamos los grupos
+#Instances all the objects
+#TODO, this should be made automatically with a loop
 GrupoSprite = pygame.sprite.Group()
 GrupoSprite.add(valvula01, valvula02)#De donde entro el agua
 GrupoSprite.add(valvula03, valvula04, valvula05)
@@ -286,8 +290,8 @@ class AppScada:
         #print a_pasar
         loop(a_pasar)
         #loop("8.38.031.9zean")
-        reactor.callLater(.1, self.lala) 
-  
+        reactor.callLater(.1, self.lala)
+
 class MyProtocol(LineReceiver):
     def lineReceived(self, line):
         #print "line received"
@@ -320,7 +324,7 @@ class check_class:
     def __init__(self, Y):
         self.connection = Y
         reactor.callLater(2, self.check)
-        
+
     def check(self):
         print self.connection.state
         if self.connection.state != "connected":
@@ -345,7 +349,7 @@ if __name__ == '__main__':
             print "conecto"
             factory = MyFactory(App)
             check = check_class(reactor.connectTCP("localhost", 7777, factory))
-        reactor.callLater(1, check.check, connect)        
+        reactor.callLater(1, check.check, connect)
         return connect
     x = initial_connect()
 

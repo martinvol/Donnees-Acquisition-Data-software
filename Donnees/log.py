@@ -1,8 +1,7 @@
 # -*- encoding: utf-8 -*-
 #!/usr/bin/python
 
-"""Este modulo se encarga de mantener la base de datos
-y subir los datos al servidor para que muestre los datos"""
+"""This module is a high level API for a SQLlite database"""
 
 import time
 import sqlite3
@@ -10,9 +9,8 @@ from os.path import join
 from models.conf import direccion
 
 class DataBase(object):
-    """"Esta clase representra toda la coneccion con la base de datos.
-    Esta clase representa un solo valor, se instancia una vez por cada
-    objeto necesitado"""
+    """This class represents a strorable object. It is instances ones per value
+     API will be translataed in upcommin releases"""
     def __init__(self, dato):
         """El 'constructor' del objeto,
         dato es un string y asi se llamara la tabla a crear"""
@@ -23,7 +21,8 @@ class DataBase(object):
         self.actualizar = True
 
     def iniDataBase(self):
-        """Abre la coneccion con la base de datos, si las tablas no esta creadas, las crea"""
+        """Opens a connection with the database, in the tables doesn't exist, creates them'"""
+        #TODO Creates one table per value, this is super bad
         self.conn = sqlite3.connect(join(direccion, 'DataBase/example'), detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
         self.c = self.conn.cursor()
         self.c.execute("SELECT * FROM sqlite_master WHERE type='table'")
@@ -41,9 +40,10 @@ class DataBase(object):
             print 'No hay tabla, y la creo'
 
     def escribira(self, valor, fecha):
+        """Saves value into a table with *fecha* as date, if fecha is not given
+        it is stored with the system time"""
 
-        """Se le da un valor y lo guarda en la base de datos con la fecha dada
-        Si no se especifica la fecha se escribira con la fecha de sistema"""
+
         #print valor
         if self.actualizar:
             self.datoviejo =  valor
@@ -70,9 +70,12 @@ class DataBase(object):
 #       time.sleep(20)
 
     def CerrarDataBase(self):
-        """Cierra la coneccion con la base de datos"""
+        """Closes the database"""
         self.c.close()
 
+
+
+#TODO from there all this code is old and should be thrown away
 baseURL = ('http://volteck.net/proyecto/parametros.php?o=', '&ph=', '&temp=', '&horario=')
 
 

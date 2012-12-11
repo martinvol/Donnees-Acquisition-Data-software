@@ -3,14 +3,17 @@
 
 import time
 import numpy as np
-from pylab import setp
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-#plt.subplots_adjust(hspace=.3, left=.5)
+
+from pylab import setp
 from matplotlib.figure import Figure
 from twisted.internet.defer import inlineCallbacks, Deferred
 from matplotlib.backends.backend_gtk import FigureCanvasGTK as FigureCanvas
 
+
+
+#plt.subplots_adjust(hspace=.3, left=.5) #TODO this sould be variable
 
 class Graph(object):
     def __init__(self,tipo):

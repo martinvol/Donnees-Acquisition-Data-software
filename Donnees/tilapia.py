@@ -10,10 +10,9 @@ emergencia envia un email a una API de las companias de mensageria, el mensage e
 llega a encargado de la instalacion describiendo el problema."""
 
 if __name__ == "__main__":
-    from twisted.internet import gtk2reactor # for gtk-2.0
+    # for gtk-2.0
+    from twisted.internet import gtk2reactor
     gtk2reactor.install()
-
-
 
 
 from gtk import glade
@@ -33,7 +32,7 @@ from twisted.internet.task import deferLater, LoopingCall
 from twisted.internet.defer import inlineCallbacks, Deferred
 
 
-#ACA DECLARABA SERIAL
+#Opens the serial port
 Serial_ = serie.Serial_
 
 class ATratar(object):
@@ -62,13 +61,15 @@ class ATratar(object):
             self.viejo = self.actual
             return self.actual
 
-class ReactorObj:
-    """This class will represent the plufgable GUI once instanced"""
+class ReactorObj: #Don't really know what is this for
     reactor = "a"
 
 class Gui(object):
+        """This class will represent the plufgable GUI once instanced"""
     def __init__(self, app):
         """Instances all the GUI objects"""
+
+        #TODO this should be done using a OOP structure
         self.companias = {0:"@sms.movistar.net.ar", 1:"@sms.cmail.com.ar"}
         self.app = app
         self.glade = glade.XML("Interfaz.glade")
@@ -95,7 +96,9 @@ class Gui(object):
         self.show_all()
 
     def graficodia(self, widget):
+            """Lauhces the Plot software"""
         print "grafico día"
+        #TODO this should be in the app object
         Popen(["python", "grafico-nomail.py"])
 
     def grafico(self, widget):

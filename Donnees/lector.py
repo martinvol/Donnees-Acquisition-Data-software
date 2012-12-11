@@ -1,6 +1,10 @@
 import poplib
 from email.Parser import Parser
 
+#This module was written by Sebastian Alonso. It is not used as part of the program
+#and will be discontinued in future versions
+
+
 """Encargado de revisar los mails y encontrar los comandos"""
 
 class lector_email():

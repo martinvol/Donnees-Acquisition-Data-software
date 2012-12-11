@@ -3,8 +3,7 @@ Donnees Acquisition Data software
 
 :Author: Martin volpe
 
-Dronnes is an open source Acquisition Data software written entirely in Python. 
-
+Dronnes is the coolest open source Acquisition Data software written entirely in Python. 
 
 Features
 --------

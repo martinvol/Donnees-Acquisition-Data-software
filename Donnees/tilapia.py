@@ -21,8 +21,10 @@ from Queue import Empty
 from os.path import join
 from Mailing import mail
 from server import server
+from sys import stdout, argv
 from subprocess import Popen
 from models import serie, lista
+from grafico import AbreParsea
 from models.conf import direccion
 from twisted.internet import reactor
 from datetime import datetime, timedelta
@@ -31,25 +33,11 @@ from twisted.internet.task import deferLater, LoopingCall
 from twisted.internet.defer import inlineCallbacks, Deferred
 
 
-
-
-
-
-from sys import stdout, argv
-
-
-from grafico import AbreParsea
-#from threading import Thread
-
-
-
-
-
 #ACA DECLARABA SERIAL
 Serial_ = serie.Serial_
 
 class ATratar(object):
-    "Esto transforma el diccionario en un objeto"
+    """This object converts dictionary the model to a object reprensentating a value"""
     actual = None
     viejo = None
     viejo_viejo = None
@@ -60,25 +48,27 @@ class ATratar(object):
         for i in kargs.keys():
             setattr(self, i, kargs[i])
         if self.grafico:
-            self.grafico = self.grafico(self) #despues hay que pasarle el color
+            self.grafico = self.grafico(self)
 
     def sacar_ultima(self):
         if self.viejo is None:
             self.viejo = self.actual
             return self.actual
         elif self.viejo == self.actual:
-            return None #No es necesario actualizar
+            #The data is up to date, don't need to update it
+            return None
         else:
             self.viejo_viejo = self.viejo
             self.viejo = self.actual
             return self.actual
 
 class ReactorObj:
+    """This class will represent the plufgable GUI once instanced"""
     reactor = "a"
 
 class Gui(object):
     def __init__(self, app):
-        """'Constructor' la objeto de la interfaz grafica."""
+        """Instances all the GUI objects"""
         self.companias = {0:"@sms.movistar.net.ar", 1:"@sms.cmail.com.ar"}
         self.app = app
         self.glade = glade.XML("Interfaz.glade")
@@ -114,6 +104,7 @@ class Gui(object):
         Popen(["python", "grafico-nomail.py", "nodia"])
 
     def stop(self, _bool):
+        """Changes the GUI status to 'stoped'"""
         self.image1.set_sensitive(_bool)
         self.image2.set_sensitive(not _bool)
 
@@ -129,15 +120,15 @@ class Gui(object):
         self.glade.get_widget("window1").show_all()
 
     def get_celphone(self):
-        """Devuelve la direccion de mail puesta en la GUI"""
+        """Return cell phone adress"""
         return self.entry1.get_text() + self.companias[self.combobox1.get_active()]
 
     def get_email(self):
-        """Devuelve el numero de celular puesto en la GUI"""
+        """Returns the e-mail adress"""
         return self.entry2.get_text()
 
     def salir(self,widget, signal):
-        """Salir"""
+        """Exits"""
         from twisted.internet import reactor
         reactor.stop()
 
@@ -155,10 +146,11 @@ def deco(*Arg):
     return _deco
 
 class App (object):
-    """Esta clase se convertira en el proceso de la interfaz grafica"""
+    """This class will represent the main app"""
     lista_de_valores = None
 
-    def __init__(self, connection, q, q1):         #inicializa toda la interfaz grafica
+    def __init__(self, connection, q, q1):
+        """Instances all the app objects"""
         from twisted.internet import reactor
         self.q = q
         self.q1 = q1
@@ -180,7 +172,8 @@ class App (object):
                 reactor.callLater(.1, obj.grafico.on_redraw_timer)
         self.gui.show_all()
 
-        reactor.callLater(10, self.mandar_mails) #tiempo de aranque de mails
+        #sets the delay before trying to send the fist mail
+        reactor.callLater(10, self.mandar_mails)
         reactor.callWhenRunning(self.conseguir_datos)
         reactor.callWhenRunning(self.refresh)
         reactor.callWhenRunning(self.subir)
@@ -356,6 +349,7 @@ def rs232(q1, Serial_):
                 print 'buscando puerto...'
                 for i in xrange(20):
                     try:
+                        #TODO this should be variable
                         retornar = Serial_("/dev/ttyUSB%s" % str(i) , 1200, timeout = .2)
                         print 'Puerto encontrado en', i
                         return retornar
@@ -395,8 +389,7 @@ def rs232(q1, Serial_):
                 counter = 0
                 if q1.qsize() > 2:
                     maximo += 1
-                    #esto regula el tamaño de la Queue
-                    #this sets the maximun size of the queue
+                    #this sets the size of the queue
             if q1.full():
                 print "canal de comunicación rebalzó"
                 q1 = Queue()

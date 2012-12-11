@@ -7,18 +7,18 @@ class DataGen(object):
     """
     def __init__(self, init=50):
         self.data = self.init = init
-        
+
     def next(self):
         self._recalc_data()
         return self.data
-    
+
     def _recalc_data(self):
         delta = random.uniform(-0.5, 0.5)
         r = random.random()
 
         if r > 0.9:
             self.data += delta * 15
-        elif r > 0.8: 
+        elif r > 0.8:
             # attraction to the initial value
             delta += (0.5 if self.init > self.data else -0.5)
             self.data += delta
@@ -27,14 +27,17 @@ class DataGen(object):
 
 
 class Serial(object):
+    """Simulates a serial object"""
     def __init__(self, *args, **kargs):
         self.bool = True
         self.opciones = [-.1 ,.1] + [0]*3
         self.ph, self.temp, self.o2 = 75, 315, 50
         self.todos = (self.ph, self.temp, self.o2)
         self.counte = 0
-        
+
     def readline(self):
+        """Returns a string formed like this 'iiiiiiiii\n' where i is
+        an interger or (s\n) where s represents an string"""
         if self.bool:
             time.sleep(0.066666667)
             self.ph += choice(self.opciones)
@@ -55,7 +58,7 @@ class Serial(object):
 
         self.bool = not self.bool
         return _return
-           
+
 
     def flushInput(self):
         pass

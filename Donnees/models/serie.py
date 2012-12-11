@@ -7,13 +7,13 @@ from sys import argv
 
 if "-f" in argv:
     import serial_fake as serial
-    print "fake"
+    print "Using the a fake serial port"
 else:
     import serial
-    print "Puerto"
+    print "Serial port initialized"
 
 def is_int(a):
-    """Si a es un entero, devuelve True"""
+    """Returns True if a is an interger"""
     try:
         int (a)
         return True
@@ -25,6 +25,8 @@ class Serial_(serial.Serial):
     _buffer = ''
 
     def mis_datos(self):
+        """Interpretates the raw inputs from the port.
+        It might be replaced for a custom one"""
         raw = self.readline()
         _return = dict()
         if len(raw) == 10 and is_int(raw):
@@ -33,14 +35,12 @@ class Serial_(serial.Serial):
             _return["temp"] = raw[6:8]+ "." + raw[8]
 #            print _return
             return _return
-            
+
         elif raw == '':
-            #aca van los scada
-            #print raw, raw
             return None
         elif len(raw) == 2:
             raw = raw[0]
-            self.counter += 1 
+            self.counter += 1
             if not raw in self._buffer:
                 self._buffer += raw
             if self.counter > 5:
@@ -58,7 +58,7 @@ class Serial_(serial.Serial):
                     self._buffer += "n"
                 if not "c" in self._buffer:
                     self._buffer += "z"
-                _return["SCADA"] = self._buffer #DESTILDAR ESTO
+                _return["SCADA"] = self._buffer
                 #_return["SCADA"] = "cja"
 #                print self._buffer
                 self._buffer = ''

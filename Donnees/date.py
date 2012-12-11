@@ -1,26 +1,28 @@
 # -*- encoding: utf-8 -*-
 #!/usr/bin/python
 
-"""Modulo encargado de dar la hora en formato entendible"""
+"""Functions for human readable current time"""
 
 from time import localtime
 
 def NOW():
     """Da lo hora en formato entendible (reimplementada)"""
+    #This is a really bad way to do this
     aux = []
     outtime = ''
 
-    for i in localtime(): 
+    for i in localtime():
         aux.append(str(i)) #['AÑO', 'MES', 'DIAS', 'HORAS', 'MINUTOS', 'SEGUNDOS', '2', '195', '0']
     outtime = aux[2] + '-' + aux[1] + '-' + aux[0] + '---' + aux[3] + 'h-' + aux[4] + 'm-' + aux[5] + 's'
     return outtime
 
 def NOWlog():
-    """Da lo hora en formato entendible"""
+    """Human readable current time"""
+    #This is a really bad way to do this
     aux = []
     outtime = ''
 
-    for i in localtime(): 
+    for i in localtime():
         aux.append(str(i)) #['AÑO', 'MES', 'DIAS', 'HORAS', 'MINUTOS', 'SEGUNDOS', '2', '195', '0']
     if len(aux[5]) == 1:
         aux[5] = '0' + aux[5]

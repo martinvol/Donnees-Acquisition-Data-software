@@ -1,7 +1,12 @@
+
+
+import time
+
+from twisted.internet import reactor
 from twisted.internet.protocol import  Factory
 from twisted.protocols.basic import LineReceiver
-from twisted.internet import reactor
-import time
+
+
 
 class ChatProtocol(LineReceiver):
     def lineReceived(self, line):
@@ -20,7 +25,7 @@ class ChatProtocol(LineReceiver):
                 self.sendLine(i["nombre"] + " " + enviar.actual + " " + enviar.tiempo.strftime("%H:%M:%S_%d/%m/%y"))
                 #probar con el equipo, conectar sin prototipo
 
-        print "Connection Made" 
+        print "Connection Made"
 
     def connectionLost(self, reason):
         print "Conneciton Lost"

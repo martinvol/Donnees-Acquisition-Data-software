@@ -2,15 +2,18 @@
 #!/usr/bin/python
 
 import time
-from pylab import setp
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-#plt.subplots_adjust(hspace=.3, left=.5)
+
+from pylab import setp
 from matplotlib.figure import Figure
 from twisted.internet.defer import inlineCallbacks, Deferred
 from matplotlib.backends.backend_gtk import FigureCanvasGTK as FigureCanvas
 
+
+
+#plt.subplots_adjust(hspace=.3, left=.5) #TODO this sould be variable
 
 class Graph(object):
     def __init__(self,tipo):
@@ -28,7 +31,7 @@ class Graph(object):
         setp(self.a.get_xticklabels(), fontsize=8)
         setp(self.a.get_yticklabels(), fontsize=8)
         self.plot_data= self.a.plot(
-            self.data, 
+            self.data,
             linewidth= 1.4,
             color= tipo.color,
             )[0]
@@ -43,7 +46,7 @@ class Graph(object):
         self.a.set_ylabel(tipo.formal)
         self.canvas = FigureCanvas(self.f)
 
-    @inlineCallbacks    
+    @inlineCallbacks
     def on_redraw_timer(self):
         from twisted.internet import reactor
         self.tiempo = time.time()
@@ -54,7 +57,7 @@ class Graph(object):
             #print "They have called me!"
             numero = self.tipo.actual
             if numero:
-                self.data = np.append (self.data, float(numero))# .append(float()) acá le agrega le dato 
+                self.data = np.append (self.data, float(numero))# .append(float()) acá le agrega le dato
                 self.fechas = np.append(self.fechas, self.cuento)
                 self.cuento += 1
                 if self.fechas.size > self.magico:
@@ -72,7 +75,7 @@ class Graph(object):
                 self.plot_data2.set_ydata(np.array([self.tipo.medio]*2))
             #self.fechas = np.append(self.fechas, datetime())
             yield
-            setp(self.a.get_xticklabels(), 
+            setp(self.a.get_xticklabels(),
                 visible=True)
             yield
             #print np.arange(self.data.size) == self.fechas
@@ -90,7 +93,7 @@ class Graph(object):
             reactor.callLater(.1, d.callback, None)
             yield d
         reactor.callLater(time.time() - self.tiempo -.1, self.on_redraw_timer)
- 
+
 class Graphtemp(object):
     def __init__(self,tipo):
         self.cuento = 0
@@ -108,7 +111,7 @@ class Graphtemp(object):
         setp(self.a.get_xticklabels(), fontsize=8)
         setp(self.a.get_yticklabels(), fontsize=8)
         self.plot_data= self.a.plot(
-            self.data, 
+            self.data,
             linewidth= 1.4,
             color= tipo.color,
             )[0]
@@ -129,7 +132,7 @@ class Graphtemp(object):
         self.a.set_ylabel(tipo.formal)
         self.canvas = FigureCanvas(self.f)
 
-    @inlineCallbacks    
+    @inlineCallbacks
     def on_redraw_timer(self):
         from twisted.internet import reactor
         self.tiempo = time.time()
@@ -140,7 +143,7 @@ class Graphtemp(object):
             #print "They have called me!"
             numero = self.tipo.actual
             if numero:
-                self.data = np.append (self.data, float(numero))# .append(float()) acá le agrega le dato 
+                self.data = np.append (self.data, float(numero))# .append(float()) acá le agrega le dato
                 self.fechas = np.append(self.fechas, self.cuento)
                 self.caldera = np.append(self.caldera, 40 if self.app.caldera.actual else 20)
                 self.cuento += 1
@@ -160,7 +163,7 @@ class Graphtemp(object):
                 self.plot_data2.set_ydata(np.array([self.tipo.medio]*2))
             #self.fechas = np.append(self.fechas, datetime())
             yield
-            setp(self.a.get_xticklabels(), 
+            setp(self.a.get_xticklabels(),
                 visible=True)
             yield
             #print np.arange(self.data.size) == self.fechas

@@ -1,31 +1,34 @@
 # -*- encoding: utf-8 -*-
 #!/usr/bin/python
 
-"""Este modulo se encarga de generar los graficos de todas las tablas 
+"""Este modulo se encarga de generar los graficos de todas las tablas
 en la base de datos y guardarlos a disco"""
 
-from models.lista import lista_de_valores
+#TODO there is a lot of commented and experiments in the code that
+#should be thrown away
 
-#Importamos todo lo relativo a graficos y matematica
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-import numpy as np
-import datetime as dt
+
 import date
 import pylab
-import matplotlib
-import matplotlib.dates
-import datetime
-from matplotlib.dates import DateFormatter
-from pylab import *
-
-#Importamos el modulo para acceder a la base de datos
 import sqlite3
+import datetime
+import matplotlib
+import numpy as np
+import datetime as dt
+import matplotlib.dates
+import matplotlib as mpl
+import matplotlib.pyplot as plt
 
+from pylab import *
 from os.path import join
 from models.conf import direccion
+from models.lista import lista_de_valores
+from matplotlib.dates import DateFormatter
 
-plt.subplots_adjust(hspace=.16, left=.07, right=.99, top=.95,bottom=.05 )
+
+
+
+plt.subplots_adjust(hspace=.16, left=.07, right=.99, top=.95,bottom=.05 ) #This should be variable
 
 def DesdeAca(base):
     #print len (base)
@@ -54,8 +57,8 @@ def abrelabase(tabla):
     c.execute('select * from %s' % tabla)
 #    row = c.fetchone()
 #    print type(row[1])
-    lista = list(c) 
-    #print len(lista)   
+    lista = list(c)
+    #print len(lista)
     c.close()
     conn.close()
     os.system("rm DataBase/temp15")
@@ -83,7 +86,7 @@ def AbreParsea(objetos):
                 fecha = k[1]
                 array0 = np.append(array0, numero)
                 array1 = np.append(array1, fecha)
-            
+
             array2 = list()
             array2.append(array1[0])
             array2.append(array1[-1])
@@ -98,7 +101,7 @@ def AbreParsea(objetos):
             plt.grid()
             plt.plot_date(mpl.dates.date2num(array1), array0, linestyle='-', marker='',xdate=.8, c=i["color"]);
             ax.xaxis.set_major_formatter(DateFormatter('%H:%M %D'))
-            #print i   
+            #print i
             plt.ylabel(u"%s [%s]" % (i["formal"], i["unidad"]) )
             ylim(0, array0.max() + 1)
 
@@ -106,7 +109,7 @@ def AbreParsea(objetos):
 
     plt.savefig(join(direccion, "grafico.png") ,dpi=1024/8)
     print "Grafico listo"
-    
+
     #plt.show()
 
 
@@ -117,12 +120,12 @@ def AbreParsea(objetos):
     archivo =  tablas = abrelabase('o2')
     usar = DesdeAca(archivo)
     archivo = abrelabase('o2')[usar:]
-    
+
     for i in archivo:
         rfecha = str(i[1])
         numero = i[0]
         #print i
-        #print rfecha[-4:], rfecha[-7:-5], rfecha[-10:-8], rfecha[0:2], rfecha[3:5], rfecha[6:8]  
+        #print rfecha[-4:], rfecha[-7:-5], rfecha[-10:-8], rfecha[0:2], rfecha[3:5], rfecha[6:8]
         fecha = i[1]
         #print fecha
         array0 = np.append(array0, numero)
@@ -136,10 +139,10 @@ def AbreParsea(objetos):
     plt.plot_date(mpl.dates.date2num(array2),[var,var],linestyle='--',marker='',c='r')
     plt.grid()
     plt.plot_date(mpl.dates.date2num(array1), array0, linestyle='-', marker='',xdate=.8,c='y')
-    ax.xaxis.set_major_formatter(DateFormatter('%H:%M'))    
+    ax.xaxis.set_major_formatter(DateFormatter('%H:%M'))
     plt.setp(ax.get_xticklabels(),'rotation',40,fontsize=8)
     ylim(0, 20)
-    plt.ylabel(u"Oxigeno[mg/l]") 
+    plt.ylabel(u"Oxigeno[mg/l]")
 
 
 
@@ -152,7 +155,7 @@ def AbreParsea(objetos):
         rfecha = str(i[1])
         numero = i[0]
 #        print i
-#        print rfecha[-4:], rfecha[-7:-5], rfecha[-10:-8], rfecha[0:2], rfecha[3:5], rfecha[6:8]  
+#        print rfecha[-4:], rfecha[-7:-5], rfecha[-10:-8], rfecha[0:2], rfecha[3:5], rfecha[6:8]
         fecha = i[1]
 #        print fecha
         array0 = np.append(array0, numero)
@@ -167,7 +170,7 @@ def AbreParsea(objetos):
     plt.xlabel("Horas")
     plt.grid()
     plt.plot_date(mpl.dates.date2num(array1), array0, linestyle='-', marker='',xdate=.8,c='g');
-    ax.xaxis.set_major_formatter(DateFormatter('%H:%M'))    
+    ax.xaxis.set_major_formatter(DateFormatter('%H:%M'))
     plt.setp(ax.get_xticklabels(),'rotation',40,fontsize=8)
     ylim(0, 14)
     plt.ylabel("Ph")

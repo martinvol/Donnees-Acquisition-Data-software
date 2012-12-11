@@ -65,7 +65,7 @@ class ReactorObj: #Don't really know what is this for
     reactor = "a"
 
 class Gui(object):
-        """This class will represent the plufgable GUI once instanced"""
+    """This class will represent the plufgable GUI once instanced"""
     def __init__(self, app):
         """Instances all the GUI objects"""
 

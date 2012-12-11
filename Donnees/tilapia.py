@@ -5,59 +5,30 @@
 y administra todos los recursos.'
 El programa se encarga de levantar datos del puerto serie de forma constante.
 Esos datos los sube a internet, los guarda en la base de datos, hace graficos
-de los datos de la base de datos y esos datos enviarlos por mail. En caso de 
+de los datos de la base de datos y esos datos enviarlos por mail. En caso de
 emergencia envia un email a una API de las companias de mensageria, el mensage enviado
 llega a encargado de la instalacion describiendo el problema."""
 
-from twisted.internet.task import deferLater, LoopingCall
-#Importamos todo lo que necesitamos:
 if __name__ == "__main__":
     from twisted.internet import gtk2reactor # for gtk-2.0
     gtk2reactor.install()
 
+
+
+
+from gtk import glade
+from os.path import join
+from server import server
+from subprocess import Popen
+from models import serie, lista
+from models.conf import direccion
 from twisted.internet import reactor
 
-from models.conf import direccion
-from os.path import join
-
-from models import serie, lista
+from twisted.internet.task import deferLater, LoopingCall
 from twisted.internet.defer import inlineCallbacks, Deferred
 
-from pylab import setp
-import numpy as np
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-#plt.subplots_adjust(hspace=.3, left=.5)
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_gtk import FigureCanvasGTK as FigureCanvas
 
-from server import server
 
-from subprocess import Popen
-
-#El toolkit grafico
-#import pygtk
-from gtk import glade
-#import gobject
-
-#from sys import argv
-
-#if "-f" in argv:
-#    import serial_fake as serial
-#else:
-#    import serial
-#    print "Puerto"
-#    help(serial.Serial)
-    
-#Modulo para hacer multi-threading (multi-hilos)
-#import threading
-
-#El modulo para multipreceso
-
-#El modulo time para poder pausar el programa
-import time
-
-#La comunicacion con el puerto serie
 
 #Modulos que son partes del programa
 #El modulo par alas fechas
@@ -68,20 +39,10 @@ from Queue import Empty
 
 from sys import stdout, argv
 
-from twisted.internet import reactor
 from Mailing import mail
 from grafico import AbreParsea
-from twisted.internet.threads import deferToThread
 #from threading import Thread
 
-#El modulo de la base de datos
-
-#El modulo para leer mails
-
-#El modulo que abre los graficos
-#from grafico import AbreParsea
-
-#El modulo que lee los mails
 
 
 
@@ -95,14 +56,14 @@ class ATratar(object):
     viejo = None
     viejo_viejo = None
     tiempo = None
-    
+
     def __init__(self, kargs):
         self.chota = 3
         for i in kargs.keys():
             setattr(self, i, kargs[i])
         if self.grafico:
             self.grafico = self.grafico(self) #despues hay que pasarle el color
-        
+
     def sacar_ultima(self):
         if self.viejo is None:
             self.viejo = self.actual
@@ -139,7 +100,7 @@ class Gui(object):
         self.combobox1.set_active(0)
         self.image1 = self.glade.get_widget("image1")#Recirculacion
         self.image2 = self.glade.get_widget("image2")#Recirculacion
-        
+
         self.entry1.set_text(''.join(open('conf/telefono')).replace('\n',''))
         self.entry2.set_text(''.join(open('conf/email')).replace('\n',''))
 
@@ -153,7 +114,7 @@ class Gui(object):
         print "grafico siempre"
 
         Popen(["python", "grafico-nomail.py", "nodia"])
-        
+
     def stop(self, _bool):
         self.image1.set_sensitive(_bool)
         self.image2.set_sensitive(not _bool)
@@ -164,7 +125,7 @@ class Gui(object):
                 else: self.label11.set_text("OFF")
         elif a_widget.actual and a_widget.widget:
             getattr(self, '%s_label' % nombre).set_text(a_widget.actual + a_widget.unidad)
-            
+
 
     def show_all(self):
         self.glade.get_widget("window1").show_all()
@@ -176,7 +137,7 @@ class Gui(object):
     def get_email(self):
         """Devuelve el numero de celular puesto en la GUI"""
         return self.entry2.get_text()
-        
+
     def salir(self,widget, signal):
         """Salir"""
         from twisted.internet import reactor
@@ -212,7 +173,7 @@ class App (object):
         self.mandar = True
 
         for name in lista_de_valores:
-            obj = ATratar(name)    
+            obj = ATratar(name)
             setattr(self, name["nombre"], obj)
             setattr(self.gui, 'graph_%s' % name, obj.grafico)
             if obj.grafico and not "-g" in argv:
@@ -246,10 +207,10 @@ class App (object):
         self.graficando = False
         def inner_blocking_code():
             AbreParsea(lista_de_valores)
-            mail(self.gui.get_email(), "Grafico de las instalaciones " 
+            mail(self.gui.get_email(), "Grafico de las instalaciones "
             + str(datetime.now().strftime("%H:%M:%S %d/%m/%y")), "Se registra un nivel de O2 de %s mg/l, un nivel de ph de %s y una temperatura de %sºC" % (self.ph.actual,                 self.o2.actual,self.temp.actual), attach0=join(direccion, "grafico.png"))
             print "mandé mail"
-            
+
         def termine(arg):
             self.graficando = False
 
@@ -262,7 +223,7 @@ class App (object):
             d.addCallbacks(termine)
 
     @deco(.1, None)
-    @inlineCallbacks    
+    @inlineCallbacks
     def subir(self):
         from twisted.internet import reactor
         for i in lista_de_valores:
@@ -276,9 +237,9 @@ class App (object):
                 #print a_subir, j.nombre
                 self.connection.sendConnected(a_subir, j.nombre, j.tiempo.strftime("%H:%M:%S_%d/%m/%y"))
             yield deferLater(reactor, 0, lambda : None)
-    
+
     @deco(.1, False)
-    @inlineCallbacks    
+    @inlineCallbacks
     def conseguir_datos(self):
         try:
             self.valor = self.q1.get(block=False)
@@ -294,7 +255,7 @@ class App (object):
             self.stop(False)
             for i in lista_de_valores:
                 i = i["nombre"]
-                if i in self.valor:    
+                if i in self.valor:
                     #print self.valor
                     #if i == "caldera":
                     #    print i, self.valor[i]
@@ -330,13 +291,13 @@ class App (object):
                     reactor.callLater(10*60, self.semaforo_sms)
         if mande: self.mandar = False
         yield deferLater(reactor, 0, lambda : None)
-                
+
     def mandar_sms(self, nombre):
         self.mandar_mails_alerta()
         def inner_blocking_code():
-            mail(self.gui.get_celphone(), "Alerta " 
+            mail(self.gui.get_celphone(), "Alerta "
                 + str(datetime.now().strftime("%H:%M:%S %d/%m/%y")), "Se registra un nivel de %s de %s, estos valores   son peligrosos." % (nombre.nombre, nombre.actual))
-            
+
         def termine(arg):
             self.graficando = False
 
@@ -347,8 +308,8 @@ class App (object):
             d = deferToThread(inner_blocking_code)
             d.addCallbacks(done, failed)
             d.addCallbacks(termine)
-    
-    
+
+
     def semaforo_sms(self):
         self.mandar = True
 
@@ -356,10 +317,10 @@ class App (object):
         self.graficando = False
         def inner_blocking_code():
             AbreParsea(lista_de_valores)
-            mail(self.gui.get_email(), "Alerta " 
+            mail(self.gui.get_email(), "Alerta "
                 + str(datetime.now().strftime("%H:%M:%S %d/%m/%y")), "Se registra un nivel de O2 de %s mg/l, un nivel de ph de %s y una temperatura de %sºC" % (self.ph.actual,                 self.o2.actual,self.temp.actual), attach0=join(direccion, "grafico.png"))
             print "mandé mail, con alerta y gráfico"
-            
+
         def termine(arg):
             self.graficando = False
 
@@ -382,23 +343,24 @@ def p1(q, ):
         nombre = vino[0]
         if not nombre in bases:
             #print vino
-            #lo instacio y lo meto en el dict            
+            #lo instacio y lo meto en el dict
             bases[nombre] = log.DataBase(nombre)
         #if nombre == "caldera":
             #print vino[3], vino[1]
         #j.nombre, j.actual, j.tiempo, j.viejo_viejo
         #print vino[3], vino[1]
-        #bases[nombre].escribira(vino[3], vino[2] - datetime.timedelta(seconds=.01))    
+        #bases[nombre].escribira(vino[3], vino[2] - datetime.timedelta(seconds=.01))
         bases[nombre].escribira(vino[1], vino[2])
         #actualizo esa base
 
 def rs232(q1, Serial_):
     """Esta funcion es la encargada de tomar los datos del puerto serie
     y envialos a todos los otrs procesos, discriminando si son valores o estados"""
+    from time import sleep
     def abrir():
         while True:
             try:
-                time.sleep(1)
+                sleep(1)
                 print 'buscando puerto...'
                 for i in xrange(20):
                     try:
@@ -458,8 +420,8 @@ def main():
     q1 = Queue()
     p = Process(target=rs232, args=(q1, Serial_))
     p.daemon = True
-    p.start()    
-    
+    p.start()
+
     from twisted.internet import reactor
     factory = server.ChatFactory()
     reactor.listenTCP(7777, factory)

@@ -97,9 +97,9 @@ class Gui(object):
 
     def graficodia(self, widget):
             """Lauhces the Plot software"""
-        print "grafico día"
-        #TODO this should be in the app object
-        Popen(["python", "grafico-nomail.py"])
+            print "grafico día"
+            #TODO this should be in the app object
+            Popen(["python", "grafico-nomail.py"])
 
     def grafico(self, widget):
         print "grafico siempre"

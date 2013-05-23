@@ -5,7 +5,7 @@ Donnees Acquisition Data software
 
 Dronnes is the coolest open source Acquisition Data software written entirely in Python. 
 
-Disclaimer: This code is pretty stable but it was originally developed for a specifical task and is not ready (nor recomended) for general usage, here you can find `more information< http://volteck.net/development/2012/08/why-donnees-sucks/>`_
+Disclaimer: This code is pretty stable but it was originally developed for a specifical task and is not ready (nor recomended) for general usage, here you can find `more information <http://volteck.net/development/2012/08/why-donnees-sucks/>`_
 
 Features
 --------
